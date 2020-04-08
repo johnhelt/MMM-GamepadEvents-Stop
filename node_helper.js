@@ -1,3 +1,7 @@
+//
+// Module : MMM-GamepadEvents
+//
+
 var exec = require('child_process').exec;
 
 module.exports = NodeHelper.create({
@@ -10,12 +14,14 @@ module.exports = NodeHelper.create({
     },
 
     socketNotificationReceived: function (notification, payload) {
-        if (notification === "INIT") {
-            this.initAfterLoading(payload);
-        }
+        switch (notification) {
+            case 'INIT':
+                this.initAfterLoading(payload);
+                break;
 
-        if (notification === "EXEC_COMBINATION") {
-            this.execCombination(payload.controller, payload.controllerHistory)
+            case 'EXEC_COMBINATION':
+                this.execCombination(payload.controller, payload.controllerHistory);
+                break;
         }
     },
 
@@ -100,5 +106,5 @@ module.exports = NodeHelper.create({
                 }
             }
         });
-    },
+    }
 });

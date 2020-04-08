@@ -14,28 +14,32 @@ Module.register("MMM-GamepadEvents", {
     controllersHistory: [],
 
     notificationReceived: function (notification, payload, sender) {
-        if (notification === "DOM_OBJECTS_CREATED") {
-            this.sendSocketNotification("INIT", this.config);
-        }
+        switch (notification) {
+            case 'DOM_OBJECTS_CREATED':
+                this.sendSocketNotification("INIT", this.config);    
+                break;
+                
+            case 'ALL_MODULES_STARTED':
+                this.initListeners();
 
-        if (notification === "ALL_MODULES_STARTED") {
-            this.initListeners();
-
-            var self = this;
-            setInterval(function () {
-                self.scanGamepads();
-                self.getButtonsValues();
-            }, this.config.scanFrequency);
+                var self = this;
+                setInterval(function () {
+                    self.scanGamepads();
+                    self.getButtonsValues();
+                }, this.config.scanFrequency);
+                break;
         }
     },
 
     socketNotificationReceived: function(notification, payload) {
-        if (notification === 'SHOW_NOTIF') {
-            this.showNotif(payload);
-        }
-
-        if (notification === 'CALL_EVENT') {
-            this.sendNotification(payload.event, payload.param);
+        switch (notification) {
+            case 'SHOW_NOTIF':
+                this.showNotif(payload);
+                break;
+                
+            case 'CALL_EVENT':
+                this.sendNotification(payload.event, payload.param);
+                break;
         }
     },
 
@@ -51,7 +55,7 @@ Module.register("MMM-GamepadEvents", {
     },
 
     scanGamepads: function () {
-        let gamepads = navigator.getGamepads();
+        var gamepads = navigator.getGamepads();
 
         Array.from(gamepads).forEach(gamepad => {
             if (gamepad) {
@@ -61,18 +65,18 @@ Module.register("MMM-GamepadEvents", {
     },
 
     getButtonsValues: function () {
-        let gamepads = Object.values(this.controllers);
-        let controllerHistory;
-        let newValues;
+        var gamepads = Object.values(this.controllers);
+        var controllerHistory;
+        var newValues;
 
         gamepads.map((gamepad, idGamepad) => {
             newValues = {'buttons': {}, 'axes': {}};
             controllerHistory = this.getControllerHistory(idGamepad);
 
             gamepad.buttons.map((button, idButton) => {
-                let pressed = button === 1.0;
-                let pressedAt = null;
-                let alreadyPressed = false;
+                var pressed = button === 1.0;
+                var pressedAt = null;
+                var alreadyPressed = false;
                 if (typeof button === 'object') {
                     pressed = button.pressed;
                 }
@@ -92,10 +96,10 @@ Module.register("MMM-GamepadEvents", {
 
 
             gamepad.axes.map((axisValue, idAxis) => {
-                let pressed = axisValue < -0.15 || axisValue > 0.15;
-                let pressedAt = null;
-                let alreadyPressed = false;
-                let axis;
+                var pressed = axisValue < -0.15 || axisValue > 0.15;
+                var pressedAt = null;
+                var alreadyPressed = false;
+                var axis;
 
                 if (idAxis === 0) {
                     axis = 'X';

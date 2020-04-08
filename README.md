@@ -1,7 +1,7 @@
 # MMM-GamepadEvents
 [Gamepad API](https://developer.mozilla.org/en-US/docs/Web/API/Gamepad_API) for [MagicMirror²](https://magicmirror.builders)
 
-## Main Features
+## Features
 - Send notification based on button or axis pressed
 - Exec command based on button or axis pressed
 - Support of buttons combinations
@@ -40,7 +40,7 @@ Edit your `config/config.js` file and add a new object to the `modules`:
 | Option                       | Description
 | ---------------------------  | -----------
 | `gamepad`                    | Array of buttons and/or axis parameters. <br> (see Gamepad options) <br> <br> **Required**
-| `command`                    | The command to exec on combination pressed 
+| `command`                    | The command to exec on combination pressed <br> <br> **Optional**
 | `event`                      | The event to send on combination pressed <br> <br> **Optional**
 | `param`                      | The param of the event <br> <br> **Optional**
 | `repeatEvent`                | Send event only one time or repeat it each time the input is scanned <br> <br> **Default value:** `false`
@@ -49,7 +49,7 @@ Edit your `config/config.js` file and add a new object to the `modules`:
 ### Gamepad options:
 You can either define a button or more, a single axis with its axisValue, or both button(s) and axis.
 
-`Important`: currently, this module has only been develop in the way to allow a single axis to be triggered in a single direction at a time  
+`Important`: this module has only been developed in the way to allow a single axis to be triggered in a single direction at a time  
 
 | Option                       | Description
 | ---------------------------- | -----------

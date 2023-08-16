@@ -3,11 +3,15 @@
 //
 
 var exec = require('child_process').exec;
+var NodeHelper = require('node_helper');
+var process = require('process')
+
 
 module.exports = NodeHelper.create({
     start: function () {
         this.config = null;
     },
+    
 
     initAfterLoading: function (config) {
         this.config = config;
@@ -22,6 +26,9 @@ module.exports = NodeHelper.create({
             case 'EXEC_COMBINATION':
                 this.execCombination(payload.controller, payload.controllerHistory);
                 break;
+            case 'STOPMM':
+                console.log("attempting to stop MM");
+                process.kill(process.pid, 'SIGINT');
         }
     },
 

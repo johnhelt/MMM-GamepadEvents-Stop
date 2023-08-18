@@ -1,8 +1,8 @@
 //
-// Module : MMM-GamepadEvents
+// Module : MMM-GamepadEvents-Stop
 //
 
-Module.register("MMM-GamepadEvents", {
+Module.register("MMM-GamepadEvents-Stop", {
     defaults: {
         axes: [],
         buttons: [],

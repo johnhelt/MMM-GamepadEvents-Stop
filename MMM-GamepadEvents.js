@@ -7,7 +7,7 @@ Module.register("MMM-GamepadEvents", {
         axes: [],
         buttons: [],
         scanFrequency: 150,
-        showNotif: true,
+        showNotif: false,
         showNotifPressed: false,
         combinations: []
     },
@@ -22,12 +22,11 @@ Module.register("MMM-GamepadEvents", {
     notificationReceived: function (notification, payload, sender) {
         switch (notification) {
             case 'DOM_OBJECTS_CREATED':
-                Log.info(`Sending init: ${this.config.showNotif}`);
                 this.sendSocketNotification("INIT", this.config);    
                 break;
                 
             case 'ALL_MODULES_STARTED':
-                this.initListeners();
+                this.initListeners();                
 
                 var self = this;
                 setInterval(function () {
@@ -95,6 +94,7 @@ Module.register("MMM-GamepadEvents", {
                         pressedAt = Date.now();
 
                         this.showNotifPressed('button ' + idButton + ' pressed');
+                        this.sendNotification("GAMEPAD_BUTTON_PRESSED", {button: idButton});
                         if (idButton == 1) {
                             this.stopMM();
                         }

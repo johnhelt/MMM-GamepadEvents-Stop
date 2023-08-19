@@ -38,6 +38,10 @@ module.exports = NodeHelper.create({
         var alreadyPressed;
         var message;
 
+        if (!this.config) {
+            return
+        }
+
         this.config.combinations.forEach((combination) => {
             if ('gamepad' in combination) {
                 canSendEvent = true;
